@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>產投送審TTQS+iCap提示詞生成器</title>
+<style>
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success-color: #16a34a;
+  --success-hover: #15803d;
+  --bg-color: #f5f7fb;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-sub: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  padding: 40px 20px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Header Area with AI Icon */
+.header-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.ai-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--primary-color);
+  animation: pulse 3s infinite ease-in-out;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.hint {
+  color: var(--text-sub);
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Form Elements */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 24px;
+  }
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.form-grid label {
+  margin-top: 0;
+}
+
+input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.primary {
+  background: var(--primary-color);
+  color: white;
+}
+.primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.copy {
+  background: var(--success-color);
+  color: white;
+}
+.copy:hover {
+  background: var(--success-hover);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+}
+
+/* Output Area */
+textarea {
+  width: 100%;
+  height: 400px;
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: #f8fafc;
+  color: #334155;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #fff;
+}
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.copyright {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.home-btn {
+  text-decoration: none;
+  color: #4b5563;
+  background-color: #f3f4f6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-btn:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+/* Animation */
+@keyframes pulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  
+  <!-- Header with AI Icon -->
+  <div class="header-section">
+    <svg class="ai-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4V6M12 18V20M6 12H4M20 12H18M7.05 7.05L8.46 8.46M15.54 15.54L16.95 16.95M7.05 16.95L8.46 15.54M15.54 8.46L16.95 7.05" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <div>
+      <h1>產投送審完整文件提示詞生成器</h1>
+      <div class="hint">
+        <span>✨ TTQS+iCap</span>
+        <span>•</span>
+        <span>輸入四個欄位，一鍵產出專業計畫書 Prompt</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div>
+      <label>1️⃣ 課程名稱</label>
+      <input id="courseName" placeholder="例如：AI 金融科技與智慧交易實務班">
+    </div>
+    <div>
+      <label>2️⃣ 課程時數 (小時)</label>
+      <input id="hours" type="number" placeholder="例如：48">
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div>
+      <label>3️⃣ 課程主題領域</label>
+      <input id="domain" placeholder="例如：AI / 行銷 / ESG / 金融科技">
+    </div>
+    <div>
+      <label>4️⃣ 目標學員族群</label>
+      <input id="target" placeholder="例如：在職上班族與數位轉型人才">
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button class="primary" onclick="generate()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12l-18 0"/><path d="M15 18l6 -6l-6 -6"/></svg>
+      生成送審提示詞
+    </button>
+    <button class="copy" onclick="copyText()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      一鍵複製提示詞
+    </button>
+  </div>
+
+  <textarea id="output" placeholder="點擊「生成」後，提示詞將顯示於此..."></textarea>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <div class="copyright">
+      &copy; 2026 Ai Fintech Corp. All Rights Reserved.
+    </div>
+    <a href="http://www.aifinsys.com" class="home-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      回首頁
+    </a>
+  </div>
+</div>
+
+<script>
+function generate() {
+  const name = document.getElementById("courseName").value;
+  const hours = document.getElementById("hours").value;
+  const domain = document.getElementById("domain").value;
+  const target = document.getElementById("target").value;
+
+  if (!name || !hours || !domain || !target) {
+    alert("請完整填寫四個欄位");
+    return;
+  }
+
+  const units = Math.ceil(hours / 3);
+
+  const prompt = `
+你是一位熟悉【勞動部產業人才投資方案】送審規範的課程規劃顧問，請依正式送審標準，完整產出一份可直接送件的產投課程文件。
+
+課程資訊如下：
+課程名稱：${name}
+課程時數：${hours} 小時
+課程主題領域：${domain}
+目標學員族群：${target}
+
+請以正式送審文件格式輸出完整內容，內容需具體、可審查、可操作、可落地，不可空泛。
+
+必須完整產出以下全部區塊：
+
+【一、課程基本資料表】
+包含課程名稱、時數、類型、對象、先備能力、訓練目標、適用產業。
+
+【二、課程目標（三層目標）】
+- 知識面（至少3點）
+- 技能面（至少3點）
+- 成果面（至少3點）
+
+【三、課程單元時程表】
+- 每3小時為一單元
+- 共 ${units} 個單元
+- 使用表格
+- 包含：主題 / 教學內容 / 教學方式 / 實作項目 / 產出成果
+
+【四、教學方法比例】
+需明確寫出：
+講授%、示範%、實作%（實作需 ≥ 50%）
+
+【五、學習成果與評量設計】
+包含：
+- 評量方式
+- 驗收標準
+- 成果交付物
+
+【六、iCAP 職能對應表】
+用表格呈現：
+職能類別 / 職能項目 / 職能代碼 / 行為指標
+
+【七、師資資格格式表】
+提供可送審履歷格式
+
+【八、場地與設備規格表】
+
+【九、經費規劃表結構】
+需符合產投審查邏輯與比例原則
+
+【十、招生與就業效益說明】
+
+【十一、審查加分標準寫法段落】
+
+【十二、送審前檢核清單】
+
+輸出要求：
+- 使用正式公文與訓練計畫書風格
+- 全部用繁體中文
+- 表格完整
+- 可直接貼入送審文件
+`;
+
+  const outputArea = document.getElementById("output");
+  outputArea.value = prompt.trim();
+  
+  // 滾動到輸出區塊
+  outputArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function copyText() {
+  const ta = document.getElementById("output");
+  if (!ta.value) {
+    alert("請先生成提示詞！");
+    return;
+  }
+  ta.select();
+  document.execCommand("copy");
+  alert("提示詞已複製，可直接貼到 AI 工具使用");
+}
+</script>
+
+</body>
+</html>
