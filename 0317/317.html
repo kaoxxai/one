@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 金融科技與智慧交易教材</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-purple: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .svg-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            fill: none;
+            stroke: var(--accent-blue);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .module-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        /* 圖片連結的互動樣式 */
+        .img-link {
+            display: block;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .img-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px -5px rgba(56, 189, 248, 0.4);
+        }
+
+        .card-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #475569;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <svg class="svg-icon" viewBox="0 0 24 24">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 8a4 4 0 0 1 4 4 M8 12a4 4 0 0 1 4-4"/>
+        </svg>
+        <h1>AI 金融科技交易與智慧防詐系統教材</h1>
+        <p style="color: var(--text-muted);">整合量化指標與資安防護的實務應用</p>
+    </header>
+
+    <div class="module-grid">
+        <div class="card">
+             <h2>AI 金融科技交易教材</h2>
+            <a href="https://aifinsys.com/1126v2" target="_blank" class="img-link" title="前往 台指期Ai 交易戰情室">
+                <img src="ait.jpg" alt="台指期Ai 交易戰情室" class="card-img">
+            </a>
+        </div>
+
+        <div class="card">
+             <h2>AI 智慧防詐系統教材</h2>
+            <a href="https://gemini.google.com/share/ae4354970739" target="_blank" class="img-link" title="前往 Ai 防詐辨識顧問">
+                <img src="aic.jpg" alt="Ai 防詐辨識顧問" class="card-img">
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Ai fintech Corp. All Rights Reserved.
+    </footer>
+</div>
+
+</body>
+</html>
